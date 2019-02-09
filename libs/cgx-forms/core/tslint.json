@@ -1,0 +1,19 @@
+{
+  "extends": "../../../tslint.json",
+  "rules": {
+    "directive-selector": [
+      true,
+      "attribute",
+      "cgx-forms",
+      "formly",
+      "camelCase"
+    ],
+    "component-selector": [
+      true,
+      "element",
+      "cgx-forms",
+      "formly",
+      "kebab-case"
+    ]
+  }
+}

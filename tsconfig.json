@@ -1,0 +1,96 @@
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "baseUrl": "./",
+    "outDir": "./dist/out-tsc",
+    "sourceMap": true,
+    "declaration": false,
+    "module": "es2015",
+    "moduleResolution": "node",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "importHelpers": true,
+    "target": "es5",
+    "typeRoots": [
+      "node_modules/@types"
+    ],
+    "lib": [
+      "es2018",
+      "dom"
+    ],
+    "paths": {
+      "@cgx-ui/controls": [
+        "dist/cgx-ui/controls"
+      ],
+      "@cgx-ui/controls/*": [
+        "dist/cgx-ui/controls/*"
+      ],
+      "@cgx-forms/core": [
+        "dist/cgx-forms/core"
+      ],
+      "@cgx-forms/core/*": [
+        "dist/cgx-forms/core/*"
+      ],
+      "@cgx-forms/dynamic": [
+        "dist/cgx-forms/dynamic"
+      ],
+      "@cgx-forms/dynamic/*": [
+        "dist/cgx-forms/dynamic/*"
+      ],
+      "audit-trail": [
+        "dist/audit-trail"
+      ],
+      "audit-trail/*": [
+        "dist/audit-trail/*"
+      ],
+      "attachment": [
+        "dist/attachment"
+      ],
+      "attachment/*": [
+        "dist/attachment/*"
+      ],
+      "md-review": [
+        "dist/md-review"
+      ],
+      "md-review/*": [
+        "dist/md-review/*"
+      ],
+      "@cgx-common/logger": [
+        "dist/cgx-common/logger"
+      ],
+      "@cgx-common/logger/*": [
+        "dist/cgx-common/logger/*"
+      ],
+      "@cgx-common/config": [
+        "dist/cgx-common/config"
+      ],
+      "@cgx-common/config/*": [
+        "dist/cgx-common/config/*"
+      ],
+      "@cgx-common/core": [
+        "dist/cgx-common/core"
+      ],
+      "@cgx-common/core/*": [
+        "dist/cgx-common/core/*"
+      ],
+      "@cgx-common/lookup": [
+        "dist/cgx-common/lookup"
+      ],
+      "@cgx-common/lookup/*": [
+        "dist/cgx-common/lookup/*"
+      ],
+      "@cgx-ui/layout": [
+        "dist/cgx-ui/layout"
+      ],
+      "@cgx-ui/layout/*": [
+        "dist/cgx-ui/layout/*"
+      ],
+      "@cgx-common/http": [
+        "dist/cgx-common/http"
+      ],
+      "@cgx-common/http/*": [
+        "dist/cgx-common/http/*"
+      ]
+    }
+  }
+}

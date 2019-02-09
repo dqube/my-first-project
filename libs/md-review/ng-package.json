@@ -1,0 +1,25 @@
+{
+  "$schema": "../../node_modules/ng-packagr/ng-package.schema.json",
+  "dest": "../../dist/md-review",
+  "lib": {
+    "entryFile": "src/public_api.ts",
+    "externals": {
+      "@cgx-forms/core": "@cgx-forms/core",
+      "@cgx-forms/dynamic": "@cgx-forms/dynamic",
+      "@cgx-common/logger": "@cgx-common/logger",
+      "@cgx-ui/layout": "@cgx-ui/layout",
+      "@cgx-ui/controls": "@cgx-ui/controls",
+      "@cgx-common/lookup": "@cgx-common/lookup",
+      "@cgx-common/config": "@cgx-common/config"
+    },
+    "umdModuleIds": {
+      "@cgx-forms/core": "@cgx-forms/core",
+      "@cgx-forms/dynamic": "@cgx-forms/dynamic",
+      "@cgx-common/logger": "@cgx-common/logger",
+      "@cgx-ui/layout": "@cgx-ui/layout",
+      "@cgx-ui/controls": "@cgx-ui/controls",
+      "@cgx-common/lookup": "@cgx-common/lookup",
+      "@cgx-common/config": "@cgx-common/config"
+    }
+  }
+}

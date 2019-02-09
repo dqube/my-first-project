@@ -1,0 +1,560 @@
+{
+  "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+  "version": 1,
+  "newProjectRoot": "libs",
+  "projects": {
+    "@cgx-ui/controls": {
+      "root": "libs/cgx-ui/controls",
+      "sourceRoot": "libs/cgx-ui/controls/src",
+      "projectType": "library",
+      "prefix": "cgx-ui",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "libs/cgx-ui/controls/tsconfig.lib.json",
+            "project": "libs/cgx-ui/controls/ng-package.json"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "libs/cgx-ui/controls/src/test.ts",
+            "tsConfig": "libs/cgx-ui/controls/tsconfig.spec.json",
+            "karmaConfig": "libs/cgx-ui/controls/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "libs/cgx-ui/controls/tsconfig.lib.json",
+              "libs/cgx-ui/controls/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    },
+    "@cgx-forms/core": {
+      "root": "libs/cgx-forms/core",
+      "sourceRoot": "libs/cgx-forms/core/src",
+      "projectType": "library",
+      "prefix": "cgx-form",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "libs/cgx-forms/core/tsconfig.lib.json",
+            "project": "libs/cgx-forms/core/ng-package.json"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "libs/cgx-forms/core/src/test.ts",
+            "tsConfig": "libs/cgx-forms/core/tsconfig.spec.json",
+            "karmaConfig": "libs/cgx-forms/core/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "libs/cgx-forms/core/tsconfig.lib.json",
+              "libs/cgx-forms/core/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    },
+    "@cgx-forms/dynamic": {
+      "root": "libs/cgx-forms/dynamic",
+      "sourceRoot": "libs/cgx-forms/dynamic/src",
+      "projectType": "library",
+      "prefix": "cgx-form",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "libs/cgx-forms/dynamic/tsconfig.lib.json",
+            "project": "libs/cgx-forms/dynamic/ng-package.json"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "libs/cgx-forms/dynamic/src/test.ts",
+            "tsConfig": "libs/cgx-forms/dynamic/tsconfig.spec.json",
+            "karmaConfig": "libs/cgx-forms/dynamic/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "libs/cgx-forms/dynamic/tsconfig.lib.json",
+              "libs/cgx-forms/dynamic/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    },
+    "audit-trail": {
+      "root": "libs/audit-trail",
+      "sourceRoot": "libs/audit-trail/src",
+      "projectType": "library",
+      "prefix": "cgx",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "libs/audit-trail/tsconfig.lib.json",
+            "project": "libs/audit-trail/ng-package.json"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "libs/audit-trail/src/test.ts",
+            "tsConfig": "libs/audit-trail/tsconfig.spec.json",
+            "karmaConfig": "libs/audit-trail/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "libs/audit-trail/tsconfig.lib.json",
+              "libs/audit-trail/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    },
+    "attachment": {
+      "root": "libs/attachment",
+      "sourceRoot": "libs/attachment/src",
+      "projectType": "library",
+      "prefix": "cgx",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "libs/attachment/tsconfig.lib.json",
+            "project": "libs/attachment/ng-package.json"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "libs/attachment/src/test.ts",
+            "tsConfig": "libs/attachment/tsconfig.spec.json",
+            "karmaConfig": "libs/attachment/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "libs/attachment/tsconfig.lib.json",
+              "libs/attachment/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    },
+    "md-review": {
+      "root": "libs/md-review",
+      "sourceRoot": "libs/md-review/src",
+      "projectType": "library",
+      "prefix": "cgx",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "libs/md-review/tsconfig.lib.json",
+            "project": "libs/md-review/ng-package.json"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "libs/md-review/src/test.ts",
+            "tsConfig": "libs/md-review/tsconfig.spec.json",
+            "karmaConfig": "libs/md-review/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "libs/md-review/tsconfig.lib.json",
+              "libs/md-review/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    },
+    "@cgx-common/logger": {
+      "root": "libs/cgx-common/logger",
+      "sourceRoot": "libs/cgx-common/logger/src",
+      "projectType": "library",
+      "prefix": "cgx",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "libs/cgx-common/logger/tsconfig.lib.json",
+            "project": "libs/cgx-common/logger/ng-package.json"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "libs/cgx-common/logger/src/test.ts",
+            "tsConfig": "libs/cgx-common/logger/tsconfig.spec.json",
+            "karmaConfig": "libs/cgx-common/logger/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "libs/cgx-common/logger/tsconfig.lib.json",
+              "libs/cgx-common/logger/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    },
+    "@cgx-common/config": {
+      "root": "libs/cgx-common/config",
+      "sourceRoot": "libs/cgx-common/config/src",
+      "projectType": "library",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "libs/cgx-common/config/tsconfig.lib.json",
+            "project": "libs/cgx-common/config/ng-package.json"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "libs/cgx-common/config/src/test.ts",
+            "tsConfig": "libs/cgx-common/config/tsconfig.spec.json",
+            "karmaConfig": "libs/cgx-common/config/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "libs/cgx-common/config/tsconfig.lib.json",
+              "libs/cgx-common/config/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    },
+    "cgx-client-shell": {
+      "root": "apps/cgx-client-shell/",
+      "sourceRoot": "apps/cgx-client-shell/src",
+      "projectType": "application",
+      "prefix": "cgx",
+      "schematics": {
+        "@schematics/angular:component": {
+          "inlineStyle": true,
+          "style": "scss"
+        }
+      },
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/cgx-client-shell",
+            "index": "apps/cgx-client-shell/src/index.html",
+            "main": "apps/cgx-client-shell/src/main.ts",
+            "polyfills": "apps/cgx-client-shell/src/polyfills.ts",
+            "tsConfig": "apps/cgx-client-shell/tsconfig.app.json",
+            "assets": [
+              "apps/cgx-client-shell/src/favicon.ico",
+              "apps/cgx-client-shell/src/assets"
+            ],
+            "styles": [
+              "apps/cgx-client-shell/src/styles.scss"
+            ],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "apps/cgx-client-shell/src/environments/environment.ts",
+                  "with": "apps/cgx-client-shell/src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "aot": true,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "cgx-client-shell:build"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "cgx-client-shell:build:production"
+            }
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "cgx-client-shell:build"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "apps/cgx-client-shell/src/test.ts",
+            "polyfills": "apps/cgx-client-shell/src/polyfills.ts",
+            "tsConfig": "apps/cgx-client-shell/tsconfig.spec.json",
+            "karmaConfig": "apps/cgx-client-shell/karma.conf.js",
+            "styles": [
+              "apps/cgx-client-shell/src/styles.scss"
+            ],
+            "scripts": [],
+            "assets": [
+              "apps/cgx-client-shell/src/favicon.ico",
+              "apps/cgx-client-shell/src/assets"
+            ]
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "apps/cgx-client-shell/tsconfig.app.json",
+              "apps/cgx-client-shell/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    },
+    "cgx-client-shell-e2e": {
+      "root": "apps/cgx-client-shell-e2e/",
+      "projectType": "application",
+      "prefix": "",
+      "architect": {
+        "e2e": {
+          "builder": "@angular-devkit/build-angular:protractor",
+          "options": {
+            "protractorConfig": "apps/cgx-client-shell-e2e/protractor.conf.js",
+            "devServerTarget": "cgx-client-shell:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "cgx-client-shell:serve:production"
+            }
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": "apps/cgx-client-shell-e2e/tsconfig.e2e.json",
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    },
+    "@cgx-common/core": {
+      "root": "libs/cgx-common/core",
+      "sourceRoot": "libs/cgx-common/core/src",
+      "projectType": "library",
+      "prefix": "cgx",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "libs/cgx-common/core/tsconfig.lib.json",
+            "project": "libs/cgx-common/core/ng-package.json"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "libs/cgx-common/core/src/test.ts",
+            "tsConfig": "libs/cgx-common/core/tsconfig.spec.json",
+            "karmaConfig": "libs/cgx-common/core/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "libs/cgx-common/core/tsconfig.lib.json",
+              "libs/cgx-common/core/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    },
+    "@cgx-common/lookup": {
+      "root": "libs/cgx-common/lookup",
+      "sourceRoot": "libs/cgx-common/lookup/src",
+      "projectType": "library",
+      "prefix": "cgx",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "libs/cgx-common/lookup/tsconfig.lib.json",
+            "project": "libs/cgx-common/lookup/ng-package.json"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "libs/cgx-common/lookup/src/test.ts",
+            "tsConfig": "libs/cgx-common/lookup/tsconfig.spec.json",
+            "karmaConfig": "libs/cgx-common/lookup/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "libs/cgx-common/lookup/tsconfig.lib.json",
+              "libs/cgx-common/lookup/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    },
+    "@cgx-ui/layout": {
+      "root": "libs/cgx-ui/layout",
+      "sourceRoot": "libs/cgx-ui/layout/src",
+      "projectType": "library",
+      "prefix": "cgx",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "libs/cgx-ui/layout/tsconfig.lib.json",
+            "project": "libs/cgx-ui/layout/ng-package.json"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "libs/cgx-ui/layout/src/test.ts",
+            "tsConfig": "libs/cgx-ui/layout/tsconfig.spec.json",
+            "karmaConfig": "libs/cgx-ui/layout/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "libs/cgx-ui/layout/tsconfig.lib.json",
+              "libs/cgx-ui/layout/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    },
+    "@cgx-common/http": {
+      "root": "libs/cgx-common/http",
+      "sourceRoot": "libs/cgx-common/http/src",
+      "projectType": "library",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "libs/cgx-common/http/tsconfig.lib.json",
+            "project": "libs/cgx-common/http/ng-package.json"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "libs/cgx-common/http/src/test.ts",
+            "tsConfig": "libs/cgx-common/http/tsconfig.spec.json",
+            "karmaConfig": "libs/cgx-common/http/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "libs/cgx-common/http/tsconfig.lib.json",
+              "libs/cgx-common/http/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    }
+  },
+  "defaultProject": "cgx-client-shell"
+}

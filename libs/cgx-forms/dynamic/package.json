@@ -1,0 +1,10 @@
+{
+  "name": "@cgx-forms/dynamic",
+  "version": "0.0.1",
+  "peerDependencies": {
+    "@cgx-forms/core": "0.0.1",
+    "@progress/kendo-angular-dropdowns": "^3.4.2",
+    "@progress/kendo-angular-inputs": "^4.0.0",
+    "@progress/kendo-angular-dateinputs":"^3.5.4"
+  }
+}
