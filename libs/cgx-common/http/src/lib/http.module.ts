@@ -1,10 +1,9 @@
 import { NgModule } from '@angular/core';
-import { HttpComponent } from './http.component';
 
 @NgModule({
-  declarations: [HttpComponent],
+  declarations: [],
   imports: [
   ],
-  exports: [HttpComponent]
+  exports: []
 })
 export class HttpModule { }

@@ -3,5 +3,6 @@
  */
 
 export * from './lib/api.service';
-export * from './lib/http.component';
 export * from './lib/http.module';
+export * from './lib/http-header.model';
+export * from './lib/request-options.interface';
