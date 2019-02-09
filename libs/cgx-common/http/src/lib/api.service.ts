@@ -1,150 +1,361 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
-import { Observable, throwError } from 'rxjs';
-import { map, catchError } from 'rxjs/operators';
+import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
+
+import { HttpHeader } from './http-header.model';
+import { CookieStore } from './cookie-store.service';
+import { IRequestInterceptor } from './request-interceptor.interface';
+import { IResponseInterceptor } from './response-interceptor.interface';
+import { HttpError } from './http-error.model';
+import { DEFAULT_REQUEST_OPTIONS, RequestOptions } from './request-options.interface';
+import { from, Observable } from 'rxjs';
+import { AngularRequestOptions } from './angular-request-options.interface';
+
+export interface Func<T, T1, T2, TResult> {
+  (item: T, item1: T1, item2: T2): TResult;
+}
 
 @Injectable()
 export class ApiService {
-  constructor(private http: HttpClient) { }
+  private _cookieStore: CookieStore = new CookieStore();
 
-  get(url: string, params?: any): Observable<Response> {
-      let options = { };
-      this.setHeaders(options);
-      
-      return this.http.get(url, options)
-          .pipe(
-              // retry(3), // retry a failed request up to 3 times
-              map((res: Response) => {
-                  return res;
-              }),
-              catchError(this.handleError)
-          );
+  private _globalHeaders: HttpHeader[] = [];
+  private _requestInterceptors: IRequestInterceptor[] = [];
+  private _responseInterceptors: IResponseInterceptor[] = [];
+  private _customCookieToHeaders = [];
+  private _baseUrl;
+  private _withCredentials;
+
+  constructor(private _http: HttpClient) {
   }
 
-  postWithId(url: string, data: any, params?: any): Observable<Response> {
-      return this.doPost(url, data, true, params);
+  public get baseUrl(): string {
+    return this._baseUrl;
   }
 
-  post(url: string, data: any, params?: any): Observable<Response> {
-      return this.doPost(url, data, false, params);
+  public registerBaseUrl(baseUrl: string): void {
+    this._baseUrl = baseUrl;
+
+    if (this._baseUrl[this._baseUrl.length - 1] !== '/') {
+      this._baseUrl += '/';
+    }
   }
 
-  putWithId(url: string, data: any, params?: any): Observable<Response> {
-      return this.doPut(url, data, true, params);
+  public deRegisterBaseUrl(): void {
+    this._baseUrl = null;
   }
 
-  private doPost(url: string, data: any, needId: boolean, params?: any): Observable<Response> {
-      let options = { };
-      this.setHeaders(options);
-
-      return this.http.post(url, data, options)
-          .pipe(
-              map((res: Response) => {
-                  return res;
-              }),
-              catchError(this.handleError)
-          );
-  }
-  
-  delete(url: string, params?: any) {
-      let options = { };
-      this.setHeaders(options);
-
-      console.log('data.service deleting');
-
-      this.http.delete(url, options)
-          .subscribe((res) => {console.log('deleted');
-      });
+  public setWithCredentials(status: boolean): void {
+    this._withCredentials = status;
   }
 
-  private handleError(error: any) {
-      if (error.error instanceof ErrorEvent) {
-          // A client-side or network error occurred. Handle it accordingly.
-          console.error('Client side network error occurred:', error.error.message);
-      } else {
-          // The backend returned an unsuccessful response code.
-          // The response body may contain clues as to what went wrong,
-          console.error('Backend - ' +
-              `status: ${error.status}, ` +
-              `statusText: ${error.statusText}, ` +
-              `message: ${error.error.message}`);
-      }
+  public registerGlobalHeader(header: HttpHeader): void {
+    this.deregisterGlobalHeader(header.key);
 
-      // return an observable with a user-facing error message
-      return throwError(error || 'server error');
+    this._globalHeaders.push(header);
   }
 
-  private doPut(url: string, data: any, needId: boolean, params?: any): Observable<Response> {
-      let options = { };
-      this.setHeaders(options);
-     
-      return this.http.put(url, data, options)
-          .pipe(
-              map((res: Response) => {
-                  return res;
-              }),
-              catchError(this.handleError)
-          );
+  public getGlobalHeaders(): HttpHeader[] {
+    return this._globalHeaders;
   }
 
-  private setHeaders(options: any){
-      // if (needId && this.securityService) {            
-      //     options["headers"] = new HttpHeaders()
-      //         .append('authorization', 'Bearer ' + this.securityService.GetToken())
-      //         .append('x-requestid', Guid.newGuid());
-      // }
-      // else if (this.securityService) {            
-      //     options["headers"] = new HttpHeaders()
-      //         .append('authorization', 'Bearer ' + this.securityService.GetToken());
-      // }
+  public deregisterGlobalHeader(headerKey: string): boolean {
+    const indexOfHeader = this._globalHeaders.findIndex(header => header.key === headerKey);
+
+    if (indexOfHeader === -1) {
+      return false;
+    }
+
+    this._globalHeaders.splice(indexOfHeader, 1);
+
+    return true;
   }
- 
-  get headers(): HttpHeaders {
-    const headersConfig = {
-      'Content-Type': 'application/json',
-      Accept: 'application/json'
+
+  public removeAllRegisteredGlobalHeaders(): void {
+    this._globalHeaders.length = 0;
+  }
+
+  public registerRequestInterceptor(requestInterceptor: IRequestInterceptor): void {
+    this._requestInterceptors.push(requestInterceptor);
+  }
+
+  public deregisterRequestInterceptor(requestInterceptor: IRequestInterceptor): boolean {
+    let indexOfItem = this._requestInterceptors.indexOf(requestInterceptor);
+
+    if (indexOfItem === -1) {
+      return false;
+    }
+
+    this._requestInterceptors.splice(indexOfItem, 1);
+
+    return true;
+  }
+
+  public registerResponseInterceptor(responseInterceptor: IResponseInterceptor): void {
+    this._responseInterceptors.push(responseInterceptor);
+  }
+
+  public deregisterResponseInterceptor(responseInterceptor: IResponseInterceptor): boolean {
+    let indexOfItem = this._responseInterceptors.indexOf(responseInterceptor);
+
+    if (indexOfItem === -1) {
+      return false;
+    }
+
+    this._responseInterceptors.splice(indexOfItem, 1);
+
+    return true;
+  }
+
+  public sendCookieValueInCustomHeader(cookieName: string, customHeaderName: string): void {
+    this._customCookieToHeaders.push({
+      cookieName: cookieName,
+      customHeaderName: customHeaderName
+    });
+  }
+
+  public async getAsync<T = any>(url: string, options: RequestOptions = DEFAULT_REQUEST_OPTIONS): Promise<T> {
+    let that = this;
+
+    return await that._requestCoreAsync<T>(url, 'GET', null, options, (url, data, modOptions) => {
+      return that._http.get(url, modOptions);
+    });
+  }
+
+  public async postAsync<T = any>(url: string, data?: any, options: RequestOptions = DEFAULT_REQUEST_OPTIONS): Promise<T> {
+    let that = this;
+
+    return await that._requestCoreAsync<T>(url, 'POST', data, options, (url, data, modOptions) => {
+      return that._http.post(url, data, modOptions);
+    });
+  }
+
+  public async putAsync<T = any>(url: string, data?: any, options: RequestOptions = DEFAULT_REQUEST_OPTIONS): Promise<T> {
+    let that = this;
+
+    return await that._requestCoreAsync<T>(url, 'PUT', data, options, (url, data, modOptions) => {
+      return that._http.put(url, data, modOptions);
+    });
+  }
+
+  public async deleteAsync<T = any>(url: string, options: RequestOptions = DEFAULT_REQUEST_OPTIONS): Promise<T> {
+    let that = this;
+
+    return await that._requestCoreAsync<T>(url, 'DELETE', null, options, (url, data, modOptions) => {
+      return that._http['delete'](url, modOptions);
+    });
+  }
+
+  public async patchAsync<T = any>(url: string, data?: any, options: RequestOptions = DEFAULT_REQUEST_OPTIONS): Promise<T> {
+    let that = this;
+
+    return await that._requestCoreAsync<T>(url, 'PATCH', data, options, (url, data, modOptions) => {
+      return that._http.patch(url, data, modOptions);
+    });
+  }
+
+  public async headAsync<T = any>(url: string, options: RequestOptions = DEFAULT_REQUEST_OPTIONS): Promise<T> {
+    let that = this;
+
+    return await that._requestCoreAsync<T>(url, 'HEAD', null, options, (url, data, modOptions) => {
+      return that._http.head(url, modOptions);
+    });
+  }
+
+  private async _requestCoreAsync<T = any>(url: string, method: string, data: any, options: RequestOptions, action: Func<string, any, AngularRequestOptions, Observable<HttpResponse<string>>>): Promise<T> {
+    url = this._convertUrl(url);
+
+    const modifiedOptions = this._modifyOptions(options);
+
+    let clientHeaders = this._convertAngularHeadersToHttpClientHeaders(<HttpHeaders>modifiedOptions.headers);
+
+    let shouldIntercept = await this._invokeRequestInterceptorsAsync(url, method, data, clientHeaders);
+
+    if (shouldIntercept) {
+      return;
+    }
+
+    modifiedOptions.headers = this._updateAngularHeadersFromHttpClientHeaders(clientHeaders, <HttpHeaders>modifiedOptions.headers);
+
+    let response: HttpResponse<string>;
+
+    try {
+      response = await action(url, data, modifiedOptions).toPromise();
+    } catch (errorResponse) {
+      response = errorResponse;
+    }
+
+    shouldIntercept = await this._invokeResponseInterceptorsAsync(response, url, method, data, clientHeaders);
+
+    if (shouldIntercept) {
+      return;
+    }
+
+    if (!response.ok) {
+      throw new HttpError(method, url, response.status, response.statusText, JSON.stringify(response.body));
+    }
+
+    let returnValue;
+
+    try {
+      returnValue = JSON.parse(response.body);
+    } catch (e) {
+      returnValue = {data: response.body};
+    }
+
+    return <T>returnValue;
+  }
+
+  public getObservable<T = any>(url: string, options: RequestOptions = DEFAULT_REQUEST_OPTIONS): Observable<T> {
+    let that = this;
+
+    return that._requestCoreObservable<T>(url, 'GET', null, options, (url, data, modOptions) => {
+      return that._http.get(url, modOptions);
+    });
+  }
+
+  public postObservable<T = any>(url: string, data: any, options: RequestOptions = DEFAULT_REQUEST_OPTIONS): Observable<T> {
+    let that = this;
+
+    return that._requestCoreObservable<T>(url, 'POST', data, options, (url, data, modOptions) => {
+      return that._http.post(url, data, modOptions);
+    });
+  }
+
+  public putObservable<T = any>(url: string, data: any, options: RequestOptions = DEFAULT_REQUEST_OPTIONS): Observable<T> {
+    let that = this;
+
+    return that._requestCoreObservable<T>(url, 'PUT', data, options, (url, data, modOptions) => {
+      return that._http.put(url, data, modOptions);
+    });
+  }
+
+  public deleteObservable<T = any>(url: string, options: RequestOptions = DEFAULT_REQUEST_OPTIONS): Observable<T> {
+    let that = this;
+
+    return that._requestCoreObservable<T>(url, 'DELETE', null, options, (url, data, modOptions) => {
+      return that._http['delete'](url, modOptions);
+    });
+  }
+
+  public patchObservable<T = any>(url: string, data: any, options: RequestOptions = DEFAULT_REQUEST_OPTIONS): Observable<T> {
+    let that = this;
+
+    return that._requestCoreObservable<T>(url, 'PATCH', data, options, (url, data, modOptions) => {
+      return that._http.patch(url, data, modOptions);
+    });
+  }
+
+  public headObservable<T = any>(url: string, options: RequestOptions = DEFAULT_REQUEST_OPTIONS): Observable<T> {
+    let that = this;
+
+    return that._requestCoreObservable<T>(url, 'HEAD', null, options, (url, data, modOptions) => {
+      return that._http.head(url, modOptions);
+    });
+  }
+
+  private _requestCoreObservable<T = any>(url: string, method: string, data: any, options: RequestOptions, action: Func<string, any, AngularRequestOptions, Observable<HttpResponse<string>>>): Observable<T> {
+    return from(this._requestCoreAsync(url, method, data, options, action));
+  }
+
+  private _convertUrl(url: string) {
+    let returnUrl = url;
+
+    if (this._baseUrl) {
+      returnUrl = this._baseUrl + returnUrl;
+    }
+
+    return returnUrl;
+  }
+
+  private _modifyOptions(options: RequestOptions): AngularRequestOptions {
+    const resultOptions: AngularRequestOptions = {
+      headers: options.headers || new HttpHeaders(),
+      observe: 'response',
+      params: options.params,
+      reportProgress: options.reportProgress,
+      responseType: 'text',
+      withCredentials: options.withCredentials || this._withCredentials,
     };
 
-    return new HttpHeaders(headersConfig);
+    options.headers = options.headers || new HttpHeaders();
+
+    resultOptions.headers = this._appendGlobalHeaders(<HttpHeaders>resultOptions.headers);
+
+    resultOptions.headers = this._tryAppendRegisteredCookiesToCustomHeaders(<HttpHeaders>resultOptions.headers);
+
+    return resultOptions;
   }
 
-  // private _request(method: HttpRequestMethod, url: string, body?: string, options?: RequestOptionsArgs): Observable<Response> {
-  //   let requestOptions = new RequestOptions(Object.assign({
-  //     method: method,
-  //     url: url,
-  //     body: body
-  //   }, options));
+  private _appendGlobalHeaders(headers: HttpHeaders): HttpHeaders {
+    let newHeaders = headers;
 
-  //   if (!requestOptions.headers) {
-  //     requestOptions.headers = new Headers();
-  //   }
+    for (const registeredHeader of this._globalHeaders) {
+      newHeaders = headers.set(registeredHeader.key, registeredHeader.value);
+    }
 
-  //   requestOptions.headers.set("Authorization", this._buildAuthHeader())
+    return newHeaders;
+  }
 
-  //   return Observable.create((observer) => {
-  //     this.process.next(Action.QueryStart);
-  //     this._http.request(new Request(requestOptions))
-  //       .map(res=> res.json())
-  //       .finally(() => {
-  //       this.process.next(Action.QueryStop);
-  //     })
-  //       .subscribe(
-  //       (res) => {
-  //         observer.next(res);
-  //         observer.complete();
-  //       },
-  //       (err) => {
-  //         switch (err.status) {
-  //           case 401:
-  //             //intercept 401
-  //             this.authFailed.next(err);
-  //             observer.error(err);
-  //             break;
-  //           default:
-  //             observer.error(err);
-  //             break;
-  //         }
-  //       })
-  //   })
-  // }
+  private _tryAppendRegisteredCookiesToCustomHeaders(headers: HttpHeaders): HttpHeaders {
+    let newHeaders = headers;
+
+    for (const cookieToHeader of this._customCookieToHeaders) {
+      const cookieValue = this._cookieStore.getCookie(cookieToHeader.cookieName);
+
+      if (cookieValue) {
+        newHeaders = headers.set(cookieToHeader.customHeaderName, cookieValue);
+      }
+    }
+
+    return newHeaders;
+  }
+
+  private async _invokeRequestInterceptorsAsync(url: string, method: string, data: any, headers: HttpHeader[]): Promise<boolean> {
+    for (const requestInterceptor of this._requestInterceptors) {
+      const shouldIntercept = await requestInterceptor.beforeRequestAsync(url, method, data, headers);
+
+      if (shouldIntercept) {
+        return true;
+      }
+    }
+
+    return false;
+  }
+
+  private async _invokeResponseInterceptorsAsync(response: HttpResponse<Object>, url: string, method: string, data: any, headers: HttpHeader[]): Promise<boolean> {
+    for (const responseInterceptor of this._responseInterceptors) {
+      const shouldIntercept = await responseInterceptor.afterResponseAsync(response, url, method, data, headers);
+
+      if (shouldIntercept) {
+        return true;
+      }
+    }
+
+    return false;
+  }
+
+  private _convertAngularHeadersToHttpClientHeaders(headers: HttpHeaders): HttpHeader[] {
+    return headers.keys().map(headerKey => {
+      const httpClientHeader = new HttpHeader();
+
+      httpClientHeader.key = headerKey;
+      httpClientHeader.value = headers.get(headerKey);
+
+      return httpClientHeader;
+    });
+  }
+
+  private _updateAngularHeadersFromHttpClientHeaders(httpClientHeaders: HttpHeader[], headers: HttpHeaders): HttpHeaders {
+    let newHeaders = headers;
+
+    for (const clientHeader of httpClientHeaders) {
+      const headerValue = headers.get(clientHeader.key);
+
+      if (headerValue !== clientHeader.value) {
+        newHeaders = headers.set(clientHeader.key, clientHeader.value);
+      }
+    }
+
+    return newHeaders;
+  }
 }
