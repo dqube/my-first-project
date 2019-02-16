@@ -23,7 +23,6 @@ export class ConfigService {
             this._env = env.state;
             this._path = env.configPath;
             this._fallbackDev = env.fallbackDev || false;
-            console.log(this._path);
             let requestDevConfig: Observable<any>;
             if (this._env != 'development' && env.fallbackDev) {
                 requestDevConfig = this._http.get(this._path)
