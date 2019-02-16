@@ -4,7 +4,8 @@
 
 export const environment = {
   production: false,
-  appConfig: 'assets/config/development.json'
+  appConfig: 'assets/config/development.json',
+  name:'development'
 };
 
 /*

@@ -11,6 +11,7 @@ import { FormlyModule } from '@cgx-forms/core';
 import { CGXDynamicFormModule } from '@cgx-forms/dynamic';
 import { LoggerModule, CgxLoggerLevel } from '@cgx-common/logger';
 import { ConfigModule } from '@cgx-common/config';
+import { environment } from '../environments/environment';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,7 @@ import { ConfigModule } from '@cgx-common/config';
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
-    ConfigModule.forRoot({ state:'development'}),
+    ConfigModule.forRoot({ state: environment.name}),
     HttpClientModule,
     FormlyModule.forRoot(),
     LoggerModule.forRoot({serverLoggingUrl: '/api/logs', level: CgxLoggerLevel.DEBUG, serverLogLevel: CgxLoggerLevel.ERROR}),
