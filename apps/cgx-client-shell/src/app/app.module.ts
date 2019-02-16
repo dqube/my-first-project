@@ -20,7 +20,7 @@ import { environment } from '../environments/environment';
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
-    ConfigModule.forRoot({ state: environment.name}),
+    ConfigModule.forRoot(environment),
     HttpClientModule,
     FormlyModule.forRoot(),
     LoggerModule.forRoot({serverLoggingUrl: '/api/logs', level: CgxLoggerLevel.DEBUG, serverLogLevel: CgxLoggerLevel.ERROR}),

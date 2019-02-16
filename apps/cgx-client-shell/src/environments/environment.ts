@@ -4,8 +4,8 @@
 
 export const environment = {
   production: false,
-  appConfig: 'assets/config/development.json',
-  name:'development'
+  configPath: './assets/config/development.json',
+  state: 'development'
 };
 
 /*
