@@ -15,7 +15,7 @@ export interface Func<T, T1, T2, TResult> {
 }
 
 @Injectable()
-export class ApiService {
+export class CGXHttp {
   private _cookieStore: CookieStore = new CookieStore();
 
   private _globalHeaders: HttpHeader[] = [];

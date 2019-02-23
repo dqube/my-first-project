@@ -1,6 +1,6 @@
 import { FormlyFieldConfig } from "@cgx-forms/core";
 import { ColumnLayout } from "@cgx-ui/layout";
-import { CGXControlType} from '@cgx-ui/controls';
+import { CGXControlType } from '@cgx-ui/controls';
 
 export interface authorization {
     name: string;
@@ -53,9 +53,10 @@ export let authorizationFormModel: FormlyFieldConfig[] = [
             {
                 className: ColumnLayout.FourColumn,
                 type: CGXControlType.Select,
-                key: 'cityName',
+                key: 'cityName',                
                 templateOptions: {
                     label: 'City',
+                    lookup: { id: 1, desc: 'sample', categoryId: 1 },
                     options: [
                         { label: 'Snickers', value: 'snickers' },
                         { label: 'Baby Ruth', value: 'baby_ruth' },
@@ -104,18 +105,14 @@ export let authorizationFormModel: FormlyFieldConfig[] = [
                 key: 'autocomplete',
                 templateOptions: {
                     label: 'Autocomplete',
-                    options: [
-                        { label: 'Snickers', value: 'snickers' },
-                        { label: 'Baby Ruth', value: 'baby_ruth' },
-                        { label: 'Milky Way', value: 'milky_way' },
-                    ],
+                    lookup: { id: 2, desc: 'sample', categoryId: 2 },                   
                 },
             },
         ],
     },
 
     { template: '<hr />' },
-    
+
     {
         type: CGXControlType.CheckBox,
         key: 'otherToo',

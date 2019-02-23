@@ -9,6 +9,14 @@
       "@progress/kendo-angular-dropdowns": "@progress/kendo-angular-dropdowns",
       "@progress/kendo-angular-inputs": "@progress/kendo-angular-inputs",
       "@progress/kendo-angular-dateinputs" :"@progress/kendo-angular-dateinputs"
+    },
+    "umdModuleIds": {
+      "@progress/kendo-angular-dropdowns": "@progress/kendo-angular-dropdowns",
+      "@progress/kendo-angular-inputs": "@progress/kendo-angular-inputs",
+      "@progress/kendo-angular-dateinputs": "@progress/kendo-angular-dateinputs",
+      "@cgx-forms/core": "@cgx-forms/core",
+      "@cgx-forms/core/select": "@cgx-forms/core/select"
     }
+
   }
 }

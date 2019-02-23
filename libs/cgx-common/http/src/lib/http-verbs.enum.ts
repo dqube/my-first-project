@@ -1,5 +1,5 @@
 export enum HttpVerbs {
-    GET = 'col-12',
+    GET = 'GET',
     POST = 'POST',
     PUT = 'PUT',
     DELETE = 'DELETE',

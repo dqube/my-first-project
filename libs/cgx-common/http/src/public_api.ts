@@ -3,7 +3,7 @@
  */
 
 export * from './lib/cookie-store.service';
-export * from './lib/api.service';
+export * from './lib/http.service';
 export * from './lib/http-header.model';
 export * from './lib/http-error.model';
 export * from './lib/request-interceptor.interface';

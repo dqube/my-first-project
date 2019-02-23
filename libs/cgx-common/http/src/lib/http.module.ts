@@ -1,18 +1,17 @@
 import { NgModule, ModuleWithProviders } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 
-import { ApiService } from './api.service';
+import { CGXHttp } from './http.service';
 
 @NgModule({
   exports: [],
   imports: [HttpClientModule],
-  providers: [ApiService]
+  providers: [CGXHttp]
 })
-export class HttpModule {
-  /** @deprecated */
+export class CGXHttpModule {
   public static forRoot(): ModuleWithProviders {
     return {
-      ngModule: HttpModule,
+      ngModule: CGXHttpModule,
       providers: []
     };
   }
