@@ -4,4 +4,7 @@
 
 export * from './lib/core.service';
 export * from './lib/core.component';
+export * from './lib/services/storage.service'
 export * from './lib/core.module';
+export * from './lib/pipes/uppercase.pipe'
+
