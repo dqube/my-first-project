@@ -17,6 +17,5 @@
       "@cgx-forms/core": "@cgx-forms/core",
       "@cgx-forms/core/select": "@cgx-forms/core/select"
     }
-
   }
 }
