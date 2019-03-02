@@ -3,7 +3,7 @@ import { SortDescriptor, orderBy, State, process, composeSortDescriptors, GroupD
 import { GridDataResult, DataStateChangeEvent } from '@progress/kendo-angular-grid';
 
 @Component({
-  selector: 'cgx-ui-cgx-grid',
+  selector: 'cgx-grid',
   templateUrl: './cgx-grid.component.html'
 })
 export class CgxGridComponent implements OnInit {

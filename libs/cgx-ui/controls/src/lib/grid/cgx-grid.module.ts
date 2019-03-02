@@ -8,6 +8,7 @@ import { DropDownsModule } from '@progress/kendo-angular-dropdowns';
   declarations: [CgxGridComponent],
   imports: [
     CommonModule,GridModule,DateInputsModule,DropDownsModule
-  ]
+  ],
+  exports: [CgxGridComponent]
 })
 export class CGXGridModule { }

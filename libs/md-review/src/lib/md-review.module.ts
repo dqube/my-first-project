@@ -5,6 +5,7 @@ import { CreateComponent } from './create/create.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FormlyModule } from '@cgx-forms/core';
 import { CGXDynamicFormModule } from '@cgx-forms/dynamic';
+import { CGXGridModule } from '@cgx-ui/controls';
 
 @NgModule({
   declarations: [MdReviewComponent, ListComponent, CreateComponent],
@@ -12,6 +13,7 @@ import { CGXDynamicFormModule } from '@cgx-forms/dynamic';
     ReactiveFormsModule,
     FormlyModule,
     CGXDynamicFormModule,
+    CGXGridModule
   ],
   exports: [MdReviewComponent, ListComponent, CreateComponent]
 })

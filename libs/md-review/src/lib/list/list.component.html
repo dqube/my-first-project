@@ -1,3 +1,10 @@
-<p>
-  list works!
-</p>
+<cgx-grid
+  #grid 
+  [gridData]="products" 
+  [columns]="columns" 
+  height="500" 
+  [pageable]="pageable" 
+  [pageSize]="take" 
+  [groupable]="groupable" 
+  [(selectedRowIndex)]="gridSelectedIndex" 
+  (selectedItem)="selectedItemChange($event)"></cgx-grid>
